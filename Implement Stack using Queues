@@ -1,0 +1,76 @@
+
+
+class MyStack {
+    private Queue<Integer> q1;
+    private Queue<Integer> q2;
+
+    public MyStack() {
+        q1 = new LinkedList<>();
+        q2 = new LinkedList<>();
+    }
+
+    public void push(int x) {
+        // Always add the new element to q1
+        q1.add(x);
+    }
+
+    public int pop() {
+        if (empty()) {
+            System.out.println("Stack is Empty!");
+            return -1;
+        }
+
+        // Transfer elements from q1 to q2, leaving the last element in q1
+        while (q1.size() > 1) {
+            q2.add(q1.remove());
+        }
+
+        // The last remaining element in q1 is the top of the stack, so remove it
+        int top = q1.remove();
+
+        // Swap q1 and q2 to make q1 the primary queue again
+        Queue<Integer> temp = q1;
+        q1 = q2;
+        q2 = temp;
+
+        return top;
+    }
+
+    public int top() {
+        if (empty()) {
+            System.out.println("Stack is Empty!");
+            return -1;
+        }
+
+        // Transfer elements from q1 to q2, leaving the last element in q1
+        while (q1.size() > 1) {
+            q2.add(q1.remove());
+        }
+
+        // Get the last remaining element in q1, which is the top of the stack
+        int top = q1.peek();
+
+        // Move it to q2 as well to keep the order intact
+        q2.add(q1.remove());
+
+        // Swap q1 and q2 to make q1 the primary queue again
+        Queue<Integer> temp = q1;
+        q1 = q2;
+        q2 = temp;
+
+        return top;
+    }
+
+    public boolean empty() {
+        return q1.isEmpty() && q2.isEmpty();
+    }
+}
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * boolean param_4 = obj.empty();
+ */
