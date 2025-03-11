@@ -1,0 +1,28 @@
+import java.util.*;
+
+class Main {
+    static class Queue
+    {
+        static Deque<Integer> d = new LinkedList<>();
+        
+        public static void add(int x) {
+            d.addFirst(x);
+        }
+        
+        public static int remove() {
+            return d.removeLast();
+        }
+        
+        public static int peek() {
+            return d.getLast();
+        }
+    }
+    public static void main(String[] args) {
+        Queue q = new Queue();
+        q.add(5);
+        q.add(3);
+        q.add(2);
+        
+        System.out.println(q.remove());
+    }
+}
