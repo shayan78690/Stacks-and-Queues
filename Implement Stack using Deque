@@ -1,0 +1,28 @@
+import java.util.*;
+
+class Main {
+    static class Stack
+    {
+        static Deque<Integer> d = new LinkedList<>();
+        
+        public static void push(int x) {
+            d.addLast(x);
+        }
+        
+        public static int pop() {
+            return d.removeLast();
+        }
+        
+        public static int peek() {
+            return d.getLast();
+        }
+    }
+    public static void main(String[] args) {
+        Stack s = new Stack();
+        s.push(5);
+        s.push(3);
+        s.push(2);
+        
+        System.out.println(s.pop());
+    }
+}
