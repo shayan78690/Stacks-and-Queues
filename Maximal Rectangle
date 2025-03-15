@@ -1,3 +1,71 @@
+class Solution {
+    static int maximalRectangle(char[][] matrix) {
+        if (matrix.length == 0)
+            return 0;
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int maxArea = 0;
+        int heights[][] = new int[n][m];
+
+        for (int j = 0; j < m; j++) {
+            int sum = 0;
+            for (int i = 0; i < n; i++) {
+                if (matrix[i][j] == '1') {
+                    sum = sum + 1;
+                } else {
+                    sum = 0;
+                }
+                heights[i][j] = sum;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            maxArea = Math.max(maxArea, largestRectangleHistogram(heights[i]));
+        }
+
+        return maxArea;
+    }
+
+    static int largestRectangleHistogram(int arr[]) {
+        int n = arr.length;
+        int nse[] = findNSE(arr, n);
+        int pse[] = findPSE(arr, n);
+
+        int maxArea = 0;
+        for (int i = 0; i < n; i++) {
+            int width = nse[i] - pse[i] - 1;
+            int area = arr[i] * width;
+            maxArea = Math.max(maxArea, area);
+        }
+        return maxArea;
+    }
+
+    static int[] findNSE(int arr[], int n) {
+        int nse[] = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        for (int i = n - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+                stack.pop();
+            }
+            nse[i] = stack.isEmpty() ? n : stack.peek();
+            stack.push(i);
+        }
+        return nse;
+    }
+
+    static int[] findPSE(int arr[], int n) {
+        int pse[] = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
+                stack.pop();
+            }
+            pse[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+        return pse;
+    }
+}
 
 
 
